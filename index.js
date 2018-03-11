@@ -3,6 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var dir = require('node-dir');
+var Gpio = require('onoff').Gpio;
 var RaspiCam = require('raspicam');
 var camera = new RaspiCam({
     mode: 'photo',
@@ -12,6 +13,8 @@ var camera = new RaspiCam({
     e:"jpg",
     q:100
 });
+
+var redLed = new Gpio(17, 'out');
 
 app.get("/", function(req, res) {
     res.sendfile('public/index.html')
@@ -29,6 +32,7 @@ app.get("/", function(req, res) {
 
  io.on('connection', function(socket){
     console.log('a user connected');
+    redLed.writeSync(1);
 
     dir.files("public/photos", function(err, files) {
         if (err) throw err;
