@@ -3,3 +3,12 @@
     background-color:black;
     height:300px;
 }
+
+#photo-container{
+    max-width:500px;
+    margin:0 auto;
+};
+
+.photo{
+    margin-top:50px;
+}
