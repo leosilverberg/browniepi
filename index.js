@@ -12,7 +12,8 @@ var camera = new RaspiCam({
     h:1000,
     e:"jpg",
     q:100,
-    ex: "sports"
+    ex: "sports",
+    nopreview: true
 });
 
 var redLed = new Gpio(23, 'out');
