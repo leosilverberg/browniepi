@@ -5,12 +5,12 @@ socket.on("init", function(msg){
     msg.forEach(msg => {
         var split = msg.split("/");
         console.log(split);
-        $("#photo-container").add("<div class='pure-u-1-1 photo'> <img src='photos/"+split[2]+"'class='pure-img'/>");
+        $("#photo-container").append("<div class='pure-u-1-1 photo'> <img src='photos/"+split[2]+"'class='pure-img'/>");
     });
 });
 
 socket.on("newphoto", function(msg){
-    $("#photo-container").add("<div class='pure-u-1-1 photo'> <img src='photos/"+msg+"'class='pure-img'/>");
+    $("#photo-container").append("<div class='pure-u-1-1 photo'> <img src='photos/"+msg+"'class='pure-img'/>");
 })
 
 $('#snap-button').click(function(){
