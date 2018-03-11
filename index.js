@@ -14,7 +14,9 @@ var camera = new RaspiCam({
     q:100
 });
 
-var redLed = new Gpio(17, 'out');
+var redLed = new Gpio(23, 'out');
+var greenLed = new Gpio(24, 'out');
+var yellowLed = new Gpio(25, 'out');
 
 app.get("/", function(req, res) {
     res.sendfile('public/index.html')
@@ -33,6 +35,8 @@ app.get("/", function(req, res) {
  io.on('connection', function(socket){
     console.log('a user connected');
     redLed.writeSync(1);
+    greenLed.writeSync(1);
+    yellowLed.writeSync(1);
 
     dir.files("public/photos", function(err, files) {
         if (err) throw err;
