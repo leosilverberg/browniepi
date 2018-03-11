@@ -18,6 +18,8 @@ var redLed = new Gpio(23, 'out');
 var greenLed = new Gpio(24, 'out');
 var yellowLed = new Gpio(25, 'out');
 var button = new Gpio(17, 'in', 'both');
+var buttonPrevVal = 0;
+var busy = false;
 
 app.get("/", function(req, res) {
     res.sendfile('public/index.html')
@@ -57,7 +59,22 @@ camera.on("read", function(err, timestamp, filename){
     }
     console.log("photo taken");
     io.emit("newphoto", filename);
-})
+    yellowOn();
+    setTimeout(function(){
+        greenOn();
+        setTimeout(function(){
+            allLedOff();
+            busy = false;
+        }, 700);
+    }, 500);
+});
+
+function snapPhoto(){
+    var timestamp = Date.now();
+    camera.set("output", "public/photos/"+timestamp+".jpg");
+    camera.start();
+    redOn();
+}
   
 
 
@@ -76,8 +93,14 @@ camera.on("read", function(err, timestamp, filename){
      if (err){
          console.log(err);
          return;
+     };
+
+     if(value == 1 && buttonPrevVal != value && busy == false){
+         busy = true;
+         snapPhoto();
      }
-     redLed.writeSync(value);
+     
+     buttonPrevVal = value;
  })
 
  function greenOn(){
