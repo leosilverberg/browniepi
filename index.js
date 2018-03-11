@@ -11,7 +11,7 @@ var camera = new RaspiCam({
     w:1000,
     h:1000,
     e:"jpg",
-    q:50,
+    q:1,
     ex: "auto"
 });
 
