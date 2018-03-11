@@ -13,7 +13,8 @@ var camera = new RaspiCam({
     e:"jpg",
     q:100,
     ex: "auto",
-    nopreview: true
+    nopreview: true,
+    timeout:10
 });
 
 var redLed = new Gpio(23, 'out');
