@@ -11,8 +11,8 @@ var camera = new RaspiCam({
     w:1000,
     h:1000,
     e:"jpg",
-    q:1,
-    ex: "auto"
+    q:100,
+    ex: "sports"
 });
 
 var redLed = new Gpio(23, 'out');
@@ -58,9 +58,10 @@ camera.on("read", function(err, timestamp, filename){
         console.log(err);
         return;
     }
+    yellowOn();
     console.log("photo taken");
     io.emit("newphoto", filename);
-    yellowOn();
+    
     setTimeout(function(){
         greenOn();
         setTimeout(function(){
