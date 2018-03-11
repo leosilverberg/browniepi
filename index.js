@@ -17,6 +17,7 @@ var camera = new RaspiCam({
 var redLed = new Gpio(23, 'out');
 var greenLed = new Gpio(24, 'out');
 var yellowLed = new Gpio(25, 'out');
+var button = new Gpio(17, 'in', 'both');
 
 app.get("/", function(req, res) {
     res.sendfile('public/index.html')
@@ -34,9 +35,6 @@ app.get("/", function(req, res) {
 
  io.on('connection', function(socket){
     console.log('a user connected');
-    redLed.writeSync(1);
-    greenLed.writeSync(1);
-    yellowLed.writeSync(1);
 
     dir.files("public/photos", function(err, files) {
         if (err) throw err;
@@ -67,4 +65,67 @@ camera.on("read", function(err, timestamp, filename){
  var port = process.env.PORT || 5000;
  http.listen(port, function() {
    console.log("Listening on " + port);
+   bootLoop(500);
  });
+
+
+
+ ////////////GPIO FUNCTIONS
+
+ button.watch(function(err, value){
+     if (err){
+         console.log(err);
+         return;
+     }
+     redLed.writeSync(value);
+ })
+
+ function greenOn(){
+    greenLed.writeSync(1);
+ };
+
+ function redOn(){
+    redLed.writeSync(1);
+ };
+
+ function yellowOn(){
+    yellowLed.writeSync(1);
+ };
+
+ function redOff(){
+     redLed.writeSync(0);
+ };
+
+ function greenOff(){
+     greenLed.writeSync(0);
+ };
+
+ function yellowOff(){
+     yellowLed.writeSync(0);
+ };
+
+ function allLedOn(){
+     greenOn();
+     redOn();
+     yellowOn();
+ };
+
+ function allLedOff(){
+    greenOff();
+    redOff();
+    yellowOff();
+};
+
+ function bootLoop(time){
+     var timer = time;
+     redOn();
+     setTimeout(function(){
+         yellowOn();
+         setTimeout(function(){
+             greenOn();
+             setTimeout(function(){
+                allLedOff();
+             }, timer);
+         }, timer);
+     }, timer);
+ };
