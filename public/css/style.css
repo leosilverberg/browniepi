@@ -9,6 +9,7 @@
     margin:0 auto;
 };
 
-.photo{
+.photo-holder{
+    padding-top:10px;
     margin-top:50px;
 };
