@@ -16,3 +16,5 @@ socket.on("newphoto", function(msg){
 $('#snap-button').click(function(){
     socket.emit("snap");
 });
+
+///comon
