@@ -8,10 +8,11 @@ var RaspiCam = require('raspicam');
 var camera = new RaspiCam({
     mode: 'photo',
     output: 'public/photos/photo1.jpg',
-    w:500,
-    h:500,
+    w:1000,
+    h:1000,
     e:"jpg",
-    q:100
+    q:50,
+    ex: "auto"
 });
 
 var redLed = new Gpio(23, 'out');
